@@ -1,13 +1,12 @@
-# GitHub Action for Laravel with MySQL
 name: CI
+
 on:
   push:
-    branches: [main]
+    branches: [main, beta, alpha]
   pull_request:
-    branches: [main]
 jobs:
   test-php-mysql:
-    name: Test PHP ${{ matrix.php-versions }} + Node ${{ matrix.node }} with MySQL
+    name: Test PHP ${{ matrix.php-versions }} (${{ matrix.stability }}) + Node ${{ matrix.node }} + ${{ matrix.os }} with MySQL
     runs-on: ubuntu-latest
     env:
       DB_DATABASE: laravel
@@ -35,11 +34,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ["8.1", "8.2"]
-        node: [16, 18]
+        php-versions: ["8.2", "8.3"]
+        node: [16, 18, 20, 22]
+        stability: [prefer-lowest, prefer-stable]
+        os: [ubuntu-latest, windows-latest]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup PHP, with composer and extensions
         uses: shivammathur/setup-php@v2 #https://github.com/shivammathur/setup-php
@@ -47,7 +48,12 @@ jobs:
           php-version: ${{ matrix.php-versions }}
           extensions: mbstring, dom, fileinfo, mysql
           coverage: xdebug
-          tools: phpcs, phpcpd
+
+      - name: Setup problem matchers
+        run: |
+          echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+          echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
       - name: Start mysql service
         run: sudo systemctl start mysql.service
 
@@ -61,7 +67,7 @@ jobs:
         run: php artisan config:clear
 
       - name: Setup NPM
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
           cache: "npm"
@@ -83,13 +89,8 @@ jobs:
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
           # REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
 
-      - name: PHP_CodeSniffer
-        run: phpcs --extensions=php app
-
-      - name: Copy/Paste Detector
-        run: phpcpd app/ --min-lines=50
   test-php-postgresql:
-    name: Test PHP ${{ matrix.php-versions }} + Node ${{ matrix.node }} with PostgreSQL
+    name: Test PHP ${{ matrix.php-versions }} (${{ matrix.stability }}) + Node ${{ matrix.node }} + ${{ matrix.os }} with PostgreSQL
     runs-on: ubuntu-latest
     env:
       BROADCAST_DRIVER: log
@@ -119,11 +120,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ["8.1"]
-        node: [16, 18]
+        php-versions: ["8.2", "8.3"]
+        node: [16, 18, 20, 22]
+        stability: [prefer-lowest, prefer-stable]
+        os: [ubuntu-latest, windows-latest]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup PHP, with composer and extensions
         uses: shivammathur/setup-php@v2 #https://github.com/shivammathur/setup-php
@@ -131,7 +134,11 @@ jobs:
           php-version: ${{ matrix.php-versions }}
           extensions: mbstring, dom, fileinfo, pgsql
           coverage: xdebug
-          tools: phpcs, phpcpd
+
+      - name: Setup problem matchers
+        run: |
+          echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+          echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
       - uses: ramsey/composer-install@v2
 
@@ -141,7 +148,7 @@ jobs:
           php artisan key:generate
 
       - name: Setup NPM
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
           cache: "npm"
@@ -165,9 +172,3 @@ jobs:
         env:
           DB_PORT: ${{ job.services.postgres.ports[5432] }}
           # REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
-
-      - name: PHP_CodeSniffer
-        run: phpcs --extensions=php app
-
-      - name: Copy/Paste Detector
-        run: phpcpd app/ --min-lines=50

@@ -1,3 +1,53 @@
+## [4.1.4](https://github.com/daveroverts/bmac/compare/v4.1.3...v4.1.4) (2024-10-20)
+
+
+### Bug Fixes
+
+* **deps:** Update livewire/livewire version to 2.12.8 or greater ([baf0897](https://github.com/daveroverts/bmac/commit/baf089734d9aaa386a2b833216859de136bad7e1))
+* **deps:** Update tinymce to version 7.4.1 ([5049c9a](https://github.com/daveroverts/bmac/commit/5049c9a8ac130d241422d69f74441a0edf303dc1))
+
+## [4.1.3](https://github.com/daveroverts/bmac/compare/v4.1.2...v4.1.3) (2024-06-06)
+
+
+### Bug Fixes
+
+* **BookingAdminController:** fix for time values not rendering in the edit form ([a60db70](https://github.com/daveroverts/bmac/commit/a60db703a0e418977f887ca6047167ba09300b94)), closes [#852](https://github.com/daveroverts/bmac/issues/852)
+* **BookingAdminController:** remove time values if it really was removed ([d4e55c9](https://github.com/daveroverts/bmac/commit/d4e55c970472c762107e6226234289111d5c45f6))
+* fix even more issues after moving to native enums ([0dbba90](https://github.com/daveroverts/bmac/commit/0dbba90c7de1a9ab7ddc8d93da2c7d5267cd0dce)), closes [#853](https://github.com/daveroverts/bmac/issues/853) [#854](https://github.com/daveroverts/bmac/issues/854)
+
+## [4.1.2](https://github.com/daveroverts/bmac/compare/v4.1.1...v4.1.2) (2024-03-14)
+
+
+### Bug Fixes
+
+* fix for enums not properly working after ([ed30828](https://github.com/daveroverts/bmac/commit/ed30828f91fd4a15919e04e0a0cdc7b90dcd3e57)), closes [#799](https://github.com/daveroverts/bmac/issues/799)
+
+## [4.1.1](https://github.com/daveroverts/bmac/compare/v4.1.0...v4.1.1) (2024-02-10)
+
+
+### Bug Fixes
+
+* bump laravel/sail to use php 8.3 ([e89a9a6](https://github.com/daveroverts/bmac/commit/e89a9a61fc8239a149c130c6f12ea8548f34f4cc))
+
+# [4.1.0](https://github.com/daveroverts/bmac/compare/v4.0.0...v4.1.0) (2024-02-06)
+
+
+### Features
+
+* convert enums to native enums ([0b322d5](https://github.com/daveroverts/bmac/commit/0b322d5d62d09d1ae1827145817c0370c19be418))
+
+# [4.0.0](https://github.com/daveroverts/bmac/compare/v3.2.0...v4.0.0) (2024-02-06)
+
+
+### Bug Fixes
+
+* **php:** drop php 8.1 support ([bdf35df](https://github.com/daveroverts/bmac/commit/bdf35df7541ba966dba1e47d1f222cba8b0ba676))
+
+
+### BREAKING CHANGES
+
+* **php:** Drop support for php 8.1
+
 # [3.2.0](https://github.com/daveroverts/bmac/compare/v3.1.0...v3.2.0) (2023-09-28)
 
 

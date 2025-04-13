@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
- * App\Models\Event
+ *
  *
  * @property int $id
  * @property int $event_type_id
@@ -34,18 +34,18 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property bool $is_oceanic_event
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Activitylog\Models\Activity[] $activities
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
  * @property-read \App\Models\Airport|null $airportArr
  * @property-read \App\Models\Airport|null $airportDep
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Booking[] $bookings
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Booking> $bookings
  * @property-read int|null $bookings_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Faq[] $faqs
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Faq> $faqs
  * @property-read int|null $faqs_count
- * @property-read \Illuminate\Database\Eloquent\Collection|EventLink[] $links
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\EventLink> $links
  * @property-read int|null $links_count
  * @property-read \App\Models\EventType|null $type
- * @method static \Database\Factories\EventFactory factory(...$parameters)
+ * @method static \Database\Factories\EventFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Event findSimilarSlugs(string $attribute, array $config, string $slug)
  * @method static \Illuminate\Database\Eloquent\Builder|Event newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Event newQuery()
@@ -158,8 +158,8 @@ class Event extends Model
     public function hasOrderButtons(): bool
     {
         return in_array($this->event_type_id, [
-            \App\Enums\EventType::FLYIN,
-            \App\Enums\EventType::GROUPFLIGHT
+            \App\Enums\EventType::FLYIN->value,
+            \App\Enums\EventType::GROUPFLIGHT->value
         ]);
     }
 }

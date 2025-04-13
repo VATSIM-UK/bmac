@@ -15,12 +15,12 @@ class Bookings extends Component
     public int $total = 0;
     public int $booked = 0;
 
-    public function filter($filter)
+    public function filter($filter): void
     {
         $this->filter = strtolower($filter);
     }
 
-    public function mount()
+    public function mount(): void
     {
         // Only enable polling if event is 'active'
         if (now()->between($this->event->startBooking, $this->event->endEvent)) {
@@ -65,6 +65,14 @@ class Bookings extends Component
 
         $this->total = $this->bookings->count();
 
-        return view('livewire.bookings');
+        // https://github.com/TomasVotruba/bladestan/issues/65#issuecomment-1582383622
+        return view('livewire.bookings', [
+            'event' => $this->event,
+            'refreshInSeconds' => $this->refreshInSeconds,
+            'bookings' => $this->bookings,
+            'filter' => $this->filter,
+            'total' => $this->total,
+            'booked' => $this->booked,
+        ]);
     }
 }
